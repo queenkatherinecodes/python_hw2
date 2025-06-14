@@ -16,6 +16,27 @@ class TestConstrainedMin(unittest.TestCase):
         """Set up PDF file for saving results - called once for the entire test class"""
         cls.pdf_filename = "constrained_optimization_results.pdf"
         cls.pdf_pages = PdfPages(cls.pdf_filename)
+        cls._add_cover_page()
+    
+    @classmethod
+    def _add_cover_page(cls):
+        """Add a cover page to the PDF with homework title and GitHub link"""
+        fig, ax = plt.subplots(figsize=(8.5, 11))
+        ax.text(0.5, 0.7, "Constrained Optimization Results", 
+                fontsize=20, fontweight='bold', ha='center', transform=ax.transAxes)
+        ax.text(0.5, 0.5, "Link to Github Repository:", 
+                fontsize=14, ha='center', transform=ax.transAxes)
+        ax.text(0.5, 0.45, "https://github.com/queenkatherinecodes/python_hw2", 
+                fontsize=12, ha='center', transform=ax.transAxes, 
+                color='blue', fontweight='bold')
+        ax.text(0.5, 0.3, "Amit Parann and Katherine Berger", 
+                fontsize=16, ha='center', transform=ax.transAxes, 
+                style='italic')
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, 1)
+        ax.axis('off')
+        cls.pdf_pages.savefig(fig, bbox_inches='tight')
+        plt.close(fig)
     
     @classmethod
     def tearDownClass(cls):
